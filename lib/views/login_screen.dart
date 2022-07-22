@@ -1,0 +1,181 @@
+import 'package:flutter/material.dart';
+import 'package:meal_monkey/responsive/base_widget.dart';
+import 'package:meal_monkey/responsive/device_info.dart';
+import 'package:meal_monkey/views/home_screen.dart';
+import 'package:meal_monkey/views/reset_password_screen.dart';
+import 'package:meal_monkey/views/sign_up_screen.dart';
+import 'package:meal_monkey/widgets/button.dart';
+import 'package:meal_monkey/widgets/custom_widget.dart';
+import 'package:meal_monkey/widgets/textField.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class LoginScreen extends StatefulWidget {
+  static String id = '/login-screen';
+
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool visible = false;
+  String _message = '';
+  final _key = GlobalKey<FormState>();
+  final _emailcontroller = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseWidget(
+      builder: (context, deviceInfo) => SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Form(
+              key: _key,
+              child: Column(
+                children: [
+                  buildHeaderText(
+                    title: "Login",
+                    description: "Add your details to login",
+                  ),
+                  _buildUserInput(deviceInfo),
+                  txtMessage(_message, visible),
+                  _buildLoginButton(context, deviceInfo),
+                  GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(ResetPassword.id),
+                      child: smallText(text: "Forgot your password?")),
+                  const SizedBox(height: 50),
+                  smallText(text: "or Login With"),
+                  _buildSocialMediaControls(deviceInfo),
+                  const SizedBox(height: 50),
+                  buildTextOption(context, SignUp.id, "Don't have an Account? ",
+                      ' Sign up'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserInput(DeviceInfo deviceInfo) {
+    return Column(
+      children: [
+        MyTextField(
+            deviceInfo: deviceInfo,
+            hintText: 'Your Email',
+            controller: _emailcontroller,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Email is required';
+              }
+
+              if (!RegExp(r'[^@]+@[^\.]+\..+').hasMatch(value)) {
+                return 'Enter correct Email';
+              } else {
+                return null;
+              }
+            }),
+        const SizedBox(height: 20),
+        MyTextField(
+            deviceInfo: deviceInfo,
+            hintText: 'password',
+            controller: _passwordController,
+            obscure: true,
+            textInputType: TextInputType.visiblePassword,
+            validator: (text) {
+              if (text!.isEmpty) {
+                return 'password is required';
+              }
+
+              final password = _passwordController.text;
+              if (password.length < 8) {
+                return 'password must be more than 8 charachters';
+              }
+            }),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context, DeviceInfo deviceInfo) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: MyButton(
+        onPressed: _validate,
+        widget: const Text('Login'),
+        color: const Color(0xffFC6011),
+        deviceInfo: deviceInfo,
+      ),
+    );
+  }
+
+  Future<void> _validate() async {
+    final form = _key.currentState;
+    if (!form!.validate()) {
+      return;
+    }
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final email = preferences.get('email');
+    final password = preferences.get('password');
+
+    if (email == null) {
+      setState(() {
+        _message =
+            'The email you entered isn’t connected to an account. sign up now';
+      });
+    } else {
+      if (email as String == _emailcontroller.text.trim() &&
+          password as String == _passwordController.text.trim()) {
+        Navigator.of(context).pushNamed(HomeScreen.id);
+      } else {
+        setState(() {
+          visible = true;
+          _message = 'your email or password is incorrect';
+        });
+      }
+    }
+  }
+
+  Widget _buildSocialMediaControls(DeviceInfo deviceInfo) {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        MyButton(
+            onPressed: () {},
+            widget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/facebook-letter-logo.png"),
+                const SizedBox(width: 25),
+                const Text(
+                  "Login with Facebook",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                )
+              ],
+            ),
+            color: const Color(0xff367FC0),
+            deviceInfo: deviceInfo),
+        const SizedBox(height: 15),
+        MyButton(
+            onPressed: () {},
+            widget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/google-plus-logo.png"),
+                const SizedBox(width: 25),
+                const Text(
+                  "Login with Google",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                )
+              ],
+            ),
+            color: const Color(0xffDD4B39),
+            deviceInfo: deviceInfo),
+      ],
+    );
+  }
+}
