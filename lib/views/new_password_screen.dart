@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/login_screen.dart';
-import 'package:meal_monkey/views/onbording_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
-import 'package:meal_monkey/widgets/textField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPassword extends StatefulWidget {
@@ -18,21 +16,14 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPasswordState extends State<NewPassword> {
-  final _key = GlobalKey<FormState>();
-
-  final _passwordController = TextEditingController();
-
-  final _confPasswordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
       builder: (context, deviceInfo) => SafeArea(
         child: Scaffold(
-          body: SizedBox(
-            width: deviceInfo.screenSize.width,
+          body: SingleChildScrollView(
             child: Form(
-              key: _key,
+              key: key,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -58,13 +49,13 @@ class _NewPasswordState extends State<NewPassword> {
         MyTextField(
             deviceInfo: deviceInfo,
             hintText: 'Password',
-            controller: _passwordController,
+            controller: passwordController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'password is required';
               }
 
-              final password = _passwordController.text;
+              final password = passwordController.text;
               if (password.length < 8) {
                 return 'password must be more than 8 charachters';
               }
@@ -74,13 +65,13 @@ class _NewPasswordState extends State<NewPassword> {
         MyTextField(
             deviceInfo: deviceInfo,
             hintText: 'Coniform Password',
-            controller: _confPasswordController,
+            controller: confPasswordController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'password is required';
               }
 
-              if (_confPasswordController.text != _passwordController.text) {
+              if (confPasswordController.text != passwordController.text) {
                 return 'Passwords do not match';
               }
             },
@@ -90,14 +81,14 @@ class _NewPasswordState extends State<NewPassword> {
   }
 
   Future<void> _validate() async {
-    final form = _key.currentState;
+    final form = key.currentState;
     if (!form!.validate()) {
       return;
     }
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final password = preferences.get('password');
-    preferences.setString('password', _passwordController.text.trim());
+    preferences.setString('password', passwordController.text.trim());
 
     Navigator.of(context).pushReplacementNamed(LoginScreen.id);
 
@@ -109,8 +100,15 @@ class _NewPasswordState extends State<NewPassword> {
     return MyButton(
       onPressed: _validate,
       widget: const Text('Next'),
-      color: const Color(0xffFC6011),
+      color: Main_Color,
       deviceInfo: deviceInfo,
     );
+  }
+
+  @override
+  void dispose() {
+    passwordController.clear();
+    confPasswordController.clear();
+    super.dispose();
   }
 }

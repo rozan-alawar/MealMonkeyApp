@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/OTP_Screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
-import 'package:meal_monkey/widgets/textField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -20,17 +19,13 @@ class _ResetPasswordState extends State<ResetPassword> {
   bool visible = false;
   String _message = '';
 
-  final _key = GlobalKey<FormState>();
-
-  final _emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
       builder: (context, deviceInfo) => SafeArea(
           child: Scaffold(
         body: Form(
-          key: _key,
+          key: key,
           child: SizedBox(
             width: deviceInfo.screenSize.width,
             child: ListView(
@@ -60,7 +55,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     return MyTextField(
       deviceInfo: deviceInfo,
       hintText: 'Email',
-      controller: _emailController,
+      controller: emailController,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Email is required';
@@ -78,7 +73,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget _buildLoginButton(BuildContext context, DeviceInfo deviceInfo) {
     return MyButton(
       onPressed: () async {
-        final form = _key.currentState;
+        final form = key.currentState;
         if (!form!.validate()) {
           return;
         }
@@ -86,7 +81,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         final email = preferences.get('email');
 
-        if (email == _emailController.text) {
+        if (email == emailController.text) {
           Navigator.of(context).pushReplacementNamed(OTPScreen.id);
         } else {
           setState(() {
@@ -96,8 +91,14 @@ class _ResetPasswordState extends State<ResetPassword> {
         }
       },
       widget: const Text('Send'),
-      color: const Color(0xffFC6011),
+      color: Main_Color,
       deviceInfo: deviceInfo,
     );
+  }
+
+  @override
+  void dispose() {
+    emailController.clear();
+    super.dispose();
   }
 }

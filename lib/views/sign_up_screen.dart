@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/getting_started_screen.dart';
 import 'package:meal_monkey/views/login_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
-import 'package:meal_monkey/widgets/textField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
@@ -18,20 +16,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final _key = GlobalKey<FormState>();
-
-  final _nameController = TextEditingController();
-
-  final _emailController = TextEditingController();
-
-  final _mobileNoController = TextEditingController();
-
-  final _addressController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-
-  final _confPasswordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
@@ -39,7 +23,7 @@ class _SignUpState extends State<SignUp> {
         child: Scaffold(
           body: SingleChildScrollView(
             child: Form(
-              key: _key,
+              key: key,
               child: Column(
                 children: [
                   Column(
@@ -71,7 +55,7 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Name',
-          controller: _nameController,
+          controller: nameController,
           validator: (value) {
             if (value!.isEmpty) {
               return 'Name is required';
@@ -82,7 +66,7 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Email',
-          controller: _emailController,
+          controller: emailController,
           validator: (value) {
             if (value!.isEmpty) {
               return 'Email is required';
@@ -99,7 +83,7 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Mobile No',
-          controller: _mobileNoController,
+          controller: mobileNoController,
           validator: (value) {
             if (value!.isEmpty) {
               return 'Mobile Number is required';
@@ -110,7 +94,7 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Address',
-          controller: _addressController,
+          controller: addressController,
           validator: (value) {
             if (value!.isEmpty) {
               return 'Address is required';
@@ -121,13 +105,13 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Password',
-          controller: _passwordController,
+          controller: passwordController,
           validator: (value) {
             if (value!.isEmpty) {
               return 'password is required';
             }
 
-            final password = _passwordController.text;
+            final password = passwordController.text;
             if (password.length < 8) {
               return 'password must be more than 8 charachters';
             }
@@ -138,13 +122,13 @@ class _SignUpState extends State<SignUp> {
         MyTextField(
           deviceInfo: deviceInfo,
           hintText: 'Coniform Password',
-          controller: _confPasswordController,
+          controller: confPasswordController,
+          obscure: true,
           validator: (value) {
             if (value!.isEmpty) {
               return 'password is required';
             }
-
-            if (_confPasswordController.text != _passwordController.text) {
+            if (confPasswordController.text != passwordController.text) {
               return 'Passwords do not match';
             }
           },
@@ -157,24 +141,24 @@ class _SignUpState extends State<SignUp> {
     return MyButton(
       onPressed: _validate,
       widget: const Text('Sign Up'),
-      color: const Color(0xffFC6011),
+      color: Main_Color,
       deviceInfo: deviceInfo,
     );
   }
 
   void _validate() async {
-    final form = _key.currentState;
+    final form = key.currentState;
     if (!form!.validate()) {
       return;
     }
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('name', _nameController.text.trim());
-    preferences.setString('email', _emailController.text.trim());
-    preferences.setString('mobile', _mobileNoController.text.trim());
-    preferences.setString('address', _addressController.text.trim());
-    preferences.setString('password', _passwordController.text.trim());
-    preferences.setString('conpassword', _confPasswordController.text.trim());
+    preferences.setString('name', nameController.text.trim());
+    preferences.setString('email', emailController.text.trim());
+    preferences.setString('mobile', mobileNoController.text.trim());
+    preferences.setString('address', addressController.text.trim());
+    preferences.setString('password', passwordController.text.trim());
+    preferences.setString('conpassword', confPasswordController.text.trim());
 
     setState(() {
       showDialog(
@@ -194,12 +178,12 @@ class _SignUpState extends State<SignUp> {
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _nameController.dispose();
-    _mobileNoController.dispose();
-    _addressController.dispose();
-    _passwordController.dispose();
-    _confPasswordController.dispose();
+    emailController.clear();
+    nameController.clear();
+    mobileNoController.clear();
+    addressController.clear();
+    passwordController.clear();
+    confPasswordController.clear();
     super.dispose();
   }
 }

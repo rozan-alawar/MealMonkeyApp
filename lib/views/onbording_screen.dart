@@ -3,9 +3,10 @@ import 'package:meal_monkey/models/onbording_content.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/sign_up_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
+
+import '../constants/constants.dart';
 
 class OnbordingScreen extends StatefulWidget {
   static String id = '/onbording-screen';
@@ -82,11 +83,11 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
 
   Widget _buildSliderIndicators(int index) {
     return PageViewDotIndicator(
-        size: Size(10, 10),
+        size: const Size(10, 10),
         currentItem: index,
         count: widget.content.length,
         unselectedColor: Color(0xffD6D6D6),
-        selectedColor: const Color(0xffFC6011));
+        selectedColor: Main_Color);
   }
 
   Widget _buildInformation(int index) {
@@ -109,7 +110,7 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
         });
       },
       widget: const Text('Next'),
-      color: const Color(0xffFC6011),
+      color: Main_Color,
       deviceInfo: deviceInfo,
     );
   }

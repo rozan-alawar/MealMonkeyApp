@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/home_screen.dart';
 import 'package:meal_monkey/views/reset_password_screen.dart';
 import 'package:meal_monkey/views/sign_up_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
-import 'package:meal_monkey/widgets/textField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,9 +20,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool visible = false;
   String _message = '';
-  final _key = GlobalKey<FormState>();
-  final _emailcontroller = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Scaffold(
           body: SingleChildScrollView(
             child: Form(
-              key: _key,
+              key: key,
               child: Column(
                 children: [
                   buildHeaderText(
@@ -67,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MyTextField(
             deviceInfo: deviceInfo,
             hintText: 'Your Email',
-            controller: _emailcontroller,
+            controller: emailController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Email is required';
@@ -83,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MyTextField(
             deviceInfo: deviceInfo,
             hintText: 'password',
-            controller: _passwordController,
+            controller: passwordController,
             obscure: true,
             textInputType: TextInputType.visiblePassword,
             validator: (text) {
@@ -91,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 return 'password is required';
               }
 
-              final password = _passwordController.text;
+              final password = passwordController.text;
               if (password.length < 8) {
                 return 'password must be more than 8 charachters';
               }
@@ -113,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _validate() async {
-    final form = _key.currentState;
+    final form = key.currentState;
     if (!form!.validate()) {
       return;
     }
@@ -124,12 +120,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email == null) {
       setState(() {
+        visible = true;
         _message =
             'The email you entered isn’t connected to an account. sign up now';
       });
     } else {
-      if (email as String == _emailcontroller.text.trim() &&
-          password as String == _passwordController.text.trim()) {
+      if (email as String == emailController.text.trim() &&
+          password as String == passwordController.text.trim()) {
         Navigator.of(context).pushNamed(HomeScreen.id);
       } else {
         setState(() {
@@ -177,5 +174,12 @@ class _LoginScreenState extends State<LoginScreen> {
             deviceInfo: deviceInfo),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    passwordController.clear();
+    emailController.clear();
+    super.dispose();
   }
 }

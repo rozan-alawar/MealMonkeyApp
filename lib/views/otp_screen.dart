@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/new_password_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:pinput/pinput.dart';
 
@@ -19,8 +19,6 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   bool visible = false;
   String _message = '';
-  final otpController = TextEditingController();
-  final _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +26,23 @@ class _OTPScreenState extends State<OTPScreen> {
       builder: (context, deviceInfo) => SafeArea(
           child: Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildHeaderText(
-                title: "We have sent an OTP to\nyour Mobile",
-                description:
-                    "Please check your mobile number 071*****12\ncontinue to reset your password",
-              ),
-              textInput(),
-              txtMessage(_message, visible),
-              _buildLoginButton(context, deviceInfo),
-              buildTextOption(
-                  context, NewPassword.id, "Didn't Receive? ", "Click Here")
-            ],
+          child: Form(
+            key: key,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildHeaderText(
+                  title: "We have sent an OTP to\nyour Mobile",
+                  description:
+                      "Please check your mobile number 071*****12\ncontinue to reset your password",
+                ),
+                textInput(),
+                txtMessage(_message, visible),
+                _buildLoginButton(context, deviceInfo),
+                buildTextOption(
+                    context, NewPassword.id, "Didn't Receive? ", "Click Here")
+              ],
+            ),
           ),
         ),
       )),
@@ -71,7 +72,7 @@ class _OTPScreenState extends State<OTPScreen> {
         ;
       },
       widget: const Text('Next'),
-      color: const Color(0xffFC6011),
+      color: Main_Color,
       deviceInfo: deviceInfo,
     );
   }

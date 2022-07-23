@@ -19,7 +19,6 @@ void main() async {
 class DeliveryApp extends StatelessWidget {
   const DeliveryApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +26,7 @@ class DeliveryApp extends StatelessWidget {
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
         GettingStartedScreen.id: (context) => const GettingStartedScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
+        LoginScreen.id: (context) => const LoginScreen(),
         SignUp.id: (context) => SignUp(),
         ResetPassword.id: (context) => ResetPassword(),
         OTPScreen.id: (context) => const OTPScreen(),

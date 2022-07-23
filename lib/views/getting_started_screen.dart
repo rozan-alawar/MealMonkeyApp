@@ -4,7 +4,8 @@ import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/login_screen.dart';
 import 'package:meal_monkey/views/onbording_screen.dart';
 import 'package:meal_monkey/views/sign_up_screen.dart';
-import 'package:meal_monkey/widgets/button.dart';
+import 'package:meal_monkey/widgets/custom_widget.dart';
+import 'package:meal_monkey/constants/constants.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   static String id = '/getting-start-screen';
@@ -91,7 +92,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               Navigator.of(context).pushNamed(LoginScreen.id);
             },
             widget: const Text('Login'),
-            color: const Color(0xffFC6011),
+            color: Main_Color,
             deviceInfo: deviceInfo,
           ),
           const SizedBox(height: 20),
