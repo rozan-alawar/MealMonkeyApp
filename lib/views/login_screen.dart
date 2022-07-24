@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MyButton(
         onPressed: _validate,
         widget: const Text('Login'),
-        color: const Color(0xffFC6011),
+        color: Main_Color,
         deviceInfo: deviceInfo,
       ),
     );
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               ],
             ),
-            color: const Color(0xffDD4B39),
+            color: Main_Color,
             deviceInfo: deviceInfo),
       ],
     );

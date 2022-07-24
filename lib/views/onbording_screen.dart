@@ -4,7 +4,7 @@ import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
 import 'package:meal_monkey/views/sign_up_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
-import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../constants/constants.dart';
 
@@ -39,11 +39,10 @@ class OnbordingScreen extends StatefulWidget {
 
 class _OnbordingScreenState extends State<OnbordingScreen> {
   late PageController controller;
-  int counter = 0;
 
   @override
   void initState() {
-    controller = PageController();
+    controller = PageController(initialPage: 0);
     super.initState();
   }
 
@@ -67,13 +66,13 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
                   children: [
                     Image.asset(widget.content[index].image),
                     const SizedBox(height: 20),
-                    _buildSliderIndicators(index),
                     const SizedBox(height: 10),
                     _buildInformation(index),
                   ],
                 ),
               ),
             ),
+            _buildSliderIndicators(),
             _buildControlButton(context, deviceInfo),
           ],
         ),
@@ -81,13 +80,19 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
     );
   }
 
-  Widget _buildSliderIndicators(int index) {
-    return PageViewDotIndicator(
-        size: const Size(10, 10),
-        currentItem: index,
+  Widget _buildSliderIndicators() {
+    return Transform.translate(
+      offset: const Offset(0, -200),
+      child: SmoothPageIndicator(
+        controller: controller,
         count: widget.content.length,
-        unselectedColor: Color(0xffD6D6D6),
-        selectedColor: Main_Color);
+        effect: const SwapEffect(
+            activeDotColor: Main_Color,
+            dotColor: Color(0xffD6D6D6),
+            dotHeight: 10,
+            dotWidth: 10),
+      ),
+    );
   }
 
   Widget _buildInformation(int index) {
@@ -99,17 +104,12 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
   Widget _buildControlButton(BuildContext context, DeviceInfo deviceInfo) {
     return MyButton(
       onPressed: () {
-        controller.nextPage(
-            duration: const Duration(seconds: 1), curve: Curves.easeIn);
-        setState(() {
-          counter++;
-          print(counter);
-          if (counter == 3) {
-            Navigator.of(context).pushReplacementNamed(SignUp.id);
-          }
-        });
+        controller.page! < 2
+            ? controller.nextPage(
+                duration: Duration(seconds: 1), curve: Curves.ease)
+            : Navigator.of(context).pushReplacementNamed(SignUp.id);
       },
-      widget: const Text('Next'),
+      widget: Text('Next'),
       color: Main_Color,
       deviceInfo: deviceInfo,
     );

@@ -8,4 +8,5 @@ final addressController = TextEditingController();
 final passwordController = TextEditingController();
 final confPasswordController = TextEditingController();
 final otpController = TextEditingController();
-const Main_Color = Color(0xffFC6011);
+
+const Color Main_Color = Color(0xffFC6011);

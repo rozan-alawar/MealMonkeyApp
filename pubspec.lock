@@ -156,13 +156,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  page_view_dot_indicator:
-    dependency: "direct dev"
-    description:
-      name: page_view_dot_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   path:
     dependency: transitive
     description:
@@ -315,6 +308,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  smooth_page_indicator:
+    dependency: "direct dev"
+    description:
+      name: smooth_page_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+2"
   source_span:
     dependency: transitive
     description:
