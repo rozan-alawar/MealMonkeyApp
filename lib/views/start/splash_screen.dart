@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
-import 'package:meal_monkey/views/getting_started_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  static String id = '/splash-screen';
+  static String id = '/splash';
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3),
-        () => Navigator.pushReplacementNamed(context, GettingStartedScreen.id));
+        () => Navigator.pushReplacementNamed(context, startPageRoute));
     super.initState();
   }
 

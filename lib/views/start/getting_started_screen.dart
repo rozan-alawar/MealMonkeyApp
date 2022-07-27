@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/login_screen.dart';
-import 'package:meal_monkey/views/onbording_screen.dart';
-import 'package:meal_monkey/views/sign_up_screen.dart';
+import 'package:meal_monkey/views/start/onbording_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:meal_monkey/constants/constants.dart';
 
 class GettingStartedScreen extends StatefulWidget {
-  static String id = '/getting-start-screen';
-
   const GettingStartedScreen({Key? key}) : super(key: key);
 
   @override
@@ -68,13 +64,13 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
           Text(
             "Discover the best foods from over 1,000",
             style: TextStyle(
-              color: Color(0xff7C7D7E),
+              color: grey,
             ),
           ),
           Text(
             "restaurants and fast delivery to your doorstep",
             style: TextStyle(
-              color: Color(0xff7C7D7E),
+              color: grey,
             ),
           ),
         ],
@@ -89,10 +85,10 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
         children: [
           MyButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(LoginScreen.id);
+              Navigator.of(context).pushNamed(loginRoute);
             },
             widget: const Text('Login'),
-            color: Main_Color,
+            color: orange,
             deviceInfo: deviceInfo,
           ),
           const SizedBox(height: 20),
@@ -101,7 +97,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               Navigator.of(context).pushNamed(OnbordingScreen.id);
             },
             widget: const Text('Create an account'),
-            color: Colors.white,
+            color: white,
             deviceInfo: deviceInfo,
           ),
         ],

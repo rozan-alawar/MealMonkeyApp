@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:meal_monkey/models/onbording_content.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/sign_up_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
 class OnbordingScreen extends StatefulWidget {
   static String id = '/onbording-screen';
@@ -87,8 +86,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
         controller: controller,
         count: widget.content.length,
         effect: const SwapEffect(
-            activeDotColor: Main_Color,
-            dotColor: Color(0xffD6D6D6),
+            activeDotColor: orange,
+            dotColor: grey,
             dotHeight: 10,
             dotWidth: 10),
       ),
@@ -107,10 +106,10 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
         controller.page! < 2
             ? controller.nextPage(
                 duration: Duration(seconds: 1), curve: Curves.ease)
-            : Navigator.of(context).pushReplacementNamed(SignUp.id);
+            : Navigator.of(context).pushReplacementNamed(signUpRoute);
       },
       widget: Text('Next'),
-      color: Main_Color,
+      color: orange,
       deviceInfo: deviceInfo,
     );
   }

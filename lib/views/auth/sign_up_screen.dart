@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/login_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
-  static String id = '/sign-up-screen';
-
-  SignUp({Key? key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  final key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
@@ -36,7 +35,7 @@ class _SignUpState extends State<SignUp> {
                       _buildUserInput(deviceInfo),
                       const SizedBox(height: 20),
                       _buildLoginButton(context, deviceInfo),
-                      buildTextOption(context, LoginScreen.id,
+                      buildTextOption(context, loginRoute,
                           "Don't have an Account? ", "Login")
                     ],
                   ),
@@ -141,7 +140,7 @@ class _SignUpState extends State<SignUp> {
     return MyButton(
       onPressed: _validate,
       widget: const Text('Sign Up'),
-      color: Main_Color,
+      color: orange,
       deviceInfo: deviceInfo,
     );
   }
@@ -184,6 +183,7 @@ class _SignUpState extends State<SignUp> {
     addressController.clear();
     passwordController.clear();
     confPasswordController.clear();
+
     super.dispose();
   }
 }

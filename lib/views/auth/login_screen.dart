@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/home_screen.dart';
-import 'package:meal_monkey/views/reset_password_screen.dart';
-import 'package:meal_monkey/views/sign_up_screen.dart';
+import 'package:meal_monkey/views/auth/reset_password_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String id = '/login-screen';
-
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool visible = false;
   String _message = '';
+  final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   _buildLoginButton(context, deviceInfo),
                   GestureDetector(
                       onTap: () =>
-                          Navigator.of(context).pushNamed(ResetPassword.id),
+                          Navigator.of(context).pushNamed(resetPassRoute),
                       child: smallText(text: "Forgot your password?")),
                   const SizedBox(height: 50),
                   smallText(text: "or Login With"),
                   _buildSocialMediaControls(deviceInfo),
                   const SizedBox(height: 50),
-                  buildTextOption(context, SignUp.id, "Don't have an Account? ",
-                      ' Sign up'),
+                  buildTextOption(context, signUpRoute,
+                      "Don't have an Account? ", ' Sign up'),
                 ],
               ),
             ),
@@ -102,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MyButton(
         onPressed: _validate,
         widget: const Text('Login'),
-        color: Main_Color,
+        color: orange,
         deviceInfo: deviceInfo,
       ),
     );
@@ -127,7 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       if (email as String == emailController.text.trim() &&
           password as String == passwordController.text.trim()) {
-        Navigator.of(context).pushNamed(HomeScreen.id);
+        Navigator.of(context).pushReplacementNamed(mainpageRoute,
+            arguments: preferences.getString('name'));
       } else {
         setState(() {
           visible = true;
@@ -150,11 +148,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(width: 25),
                 const Text(
                   "Login with Facebook",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(color: white, fontSize: 14),
                 )
               ],
             ),
-            color: const Color(0xff367FC0),
+            color: blue,
             deviceInfo: deviceInfo),
         const SizedBox(height: 15),
         MyButton(
@@ -166,11 +164,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(width: 25),
                 const Text(
                   "Login with Google",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(color: white, fontSize: 14),
                 )
               ],
             ),
-            color: Main_Color,
+            color: red,
             deviceInfo: deviceInfo),
       ],
     );

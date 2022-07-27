@@ -3,13 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/new_password_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPScreen extends StatefulWidget {
-  static String id = '/OTP-screen';
-
   const OTPScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,6 +16,7 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   bool visible = false;
   String _message = '';
+  final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 txtMessage(_message, visible),
                 _buildLoginButton(context, deviceInfo),
                 buildTextOption(
-                    context, NewPassword.id, "Didn't Receive? ", "Click Here")
+                    context, newPassRoute, "Didn't Receive? ", "Click Here")
               ],
             ),
           ),
@@ -64,7 +62,7 @@ class _OTPScreenState extends State<OTPScreen> {
     return MyButton(
       onPressed: () {
         otpController.text == '0000'
-            ? Navigator.of(context).pushReplacementNamed(NewPassword.id)
+            ? Navigator.of(context).pushReplacementNamed(newPassRoute)
             : setState(() {
                 visible = true;
                 _message = 'Invalid number';
@@ -72,7 +70,7 @@ class _OTPScreenState extends State<OTPScreen> {
         ;
       },
       widget: const Text('Next'),
-      color: Main_Color,
+      color: orange,
       deviceInfo: deviceInfo,
     );
   }

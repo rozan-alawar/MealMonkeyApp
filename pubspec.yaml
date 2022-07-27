@@ -43,6 +43,8 @@ dev_dependencies:
   pinput: ^2.2.11
   shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
+  animated_bottom_navigation_bar: ^1.0.1
+  get_it: ^7.2.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

@@ -20,13 +20,11 @@ Widget buildHeaderText({required String title, required String description}) {
 
 Widget smallText({required String text}) {
   return Padding(
-    padding: const EdgeInsets.only(top: 20.0),
+    padding: const EdgeInsets.only(top: 10.0),
     child: Text(
       text,
       style: const TextStyle(
-          fontSize: 15,
-          color: Color.fromARGB(255, 168, 169, 170),
-          fontWeight: FontWeight.bold),
+          fontSize: 15, color: grey, fontWeight: FontWeight.bold),
       textAlign: TextAlign.center,
     ),
   );
@@ -43,11 +41,11 @@ Widget buildTextOption(
         GestureDetector(
           onTap: () => Navigator.of(context).pushNamed(routeId),
           child: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: Text(
               option,
               style: const TextStyle(
-                  color: Main_Color, fontWeight: FontWeight.bold, fontSize: 16),
+                  color: orange, fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
         ),
@@ -77,17 +75,16 @@ Widget MyButton(
     required Color color,
     required DeviceInfo deviceInfo}) {
   return SizedBox(
-    width: deviceInfo.screenSize.width * 0.85,
+    width: deviceInfo.screenSize.width * 0.9,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
           primary: color,
-          onPrimary: color == Main_Color ? Colors.white : Main_Color,
+          onPrimary: color == orange ? white : orange,
           padding: const EdgeInsets.symmetric(vertical: 20),
           textStyle: const TextStyle(fontSize: 17),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
-              side: BorderSide(
-                  color: color == Colors.white ? Main_Color : color))),
+              side: BorderSide(color: color == white ? orange : color))),
       onPressed: onPressed,
       child: widget,
     ),
@@ -100,26 +97,63 @@ Widget MyTextField(
     required controller,
     required validator,
     bool obscure = false,
-    TextInputType textInputType = TextInputType.emailAddress}) {
+    TextInputType textInputType = TextInputType.emailAddress,
+    bool withPrefixIcon = false}) {
   return SizedBox(
-    width: deviceInfo.screenSize.width * 0.85,
+    width: deviceInfo.screenSize.width * 0.9,
     child: TextFormField(
       obscureText: obscure,
       keyboardType: textInputType,
       controller: controller,
       validator: validator,
       decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 234, 234, 234),
+        prefixIcon: withPrefixIcon ? const Icon(Icons.search) : null,
+        // fillColor: grey,
         filled: true,
         hintText: hintText,
-        hintStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+        hintStyle: const TextStyle(fontSize: 15, color: grey),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(50),
           borderSide: BorderSide.none,
         ),
       ),
     ),
+  );
+}
+
+AppBar myAppBar(
+    {required String text, bool automaticallyImplyLeading = false}) {
+  return AppBar(
+    titleSpacing: 20,
+    automaticallyImplyLeading: automaticallyImplyLeading,
+    iconTheme: const IconThemeData(color: primGrey),
+    backgroundColor: white,
+    elevation: 0,
+    title: Text(
+      text,
+      style: const TextStyle(color: Colors.black, fontSize: 22),
+    ),
+    actions: const [
+      Icon(
+        Icons.shopping_cart_rounded,
+        size: 30,
+      ),
+      SizedBox(width: 20)
+    ],
+  );
+}
+
+Widget buildSearchFoodBox(
+    DeviceInfo deviceInfo, TextEditingController searchController) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    child: MyTextField(
+        deviceInfo: deviceInfo,
+        hintText: 'Search food',
+        controller: searchController,
+        validator: (value) {},
+        withPrefixIcon: true),
   );
 }

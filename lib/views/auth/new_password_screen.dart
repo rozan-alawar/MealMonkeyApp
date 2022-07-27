@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/login_screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPassword extends StatefulWidget {
-  static String id = '/new-password-screen';
-
-  NewPassword({Key? key}) : super(key: key);
+  const NewPassword({Key? key}) : super(key: key);
 
   @override
   State<NewPassword> createState() => _NewPasswordState();
 }
 
 class _NewPasswordState extends State<NewPassword> {
+  final key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
@@ -24,17 +23,18 @@ class _NewPasswordState extends State<NewPassword> {
           body: SingleChildScrollView(
             child: Form(
               key: key,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  buildHeaderText(
-                      title: "New Password",
-                      description:
-                          "Please enter your email to receive a \nlink to  create a new password via email"),
-                  _buildUserInput(deviceInfo),
-                  const SizedBox(height: 20),
-                  _buildLoginButton(context, deviceInfo),
-                ],
+              child: Center(
+                child: Column(
+                  children: [
+                    buildHeaderText(
+                        title: "New Password",
+                        description:
+                            "Please enter your email to receive a \nlink to  create a new password via email"),
+                    _buildUserInput(deviceInfo),
+                    const SizedBox(height: 20),
+                    _buildLoginButton(context, deviceInfo),
+                  ],
+                ),
               ),
             ),
           ),
@@ -87,10 +87,10 @@ class _NewPasswordState extends State<NewPassword> {
     }
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    final password = preferences.get('password');
+    // final password = preferences.get('password');
     preferences.setString('password', passwordController.text.trim());
 
-    Navigator.of(context).pushReplacementNamed(LoginScreen.id);
+    Navigator.of(context).pushReplacementNamed(loginRoute);
 
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('password change successful')));
@@ -100,7 +100,7 @@ class _NewPasswordState extends State<NewPassword> {
     return MyButton(
       onPressed: _validate,
       widget: const Text('Next'),
-      color: Main_Color,
+      color: orange,
       deviceInfo: deviceInfo,
     );
   }

@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meal_monkey/constants/constants.dart';
 import 'package:meal_monkey/responsive/base_widget.dart';
 import 'package:meal_monkey/responsive/device_info.dart';
-import 'package:meal_monkey/views/OTP_Screen.dart';
 import 'package:meal_monkey/widgets/custom_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResetPassword extends StatefulWidget {
-  static String id = '/reset-password-screen';
-
-  ResetPassword({Key? key}) : super(key: key);
-
+  const ResetPassword({Key? key}) : super(key: key);
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
 }
@@ -18,6 +14,7 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   bool visible = false;
   String _message = '';
+  final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +79,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         final email = preferences.get('email');
 
         if (email == emailController.text) {
-          Navigator.of(context).pushReplacementNamed(OTPScreen.id);
+          Navigator.of(context).pushReplacementNamed(otpRoute);
         } else {
           setState(() {
             _message = 'email is incorrect';
@@ -91,7 +88,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         }
       },
       widget: const Text('Send'),
-      color: Main_Color,
+      color: orange,
       deviceInfo: deviceInfo,
     );
   }
