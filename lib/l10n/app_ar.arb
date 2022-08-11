@@ -1,0 +1,22 @@
+{
+    "login": "تسجيل الدخول ",
+    "addYourDetailsToLogin": "أضف التفاصيل الخاصة بك للدخول ",
+    "forgetPassword": "هل نسيت كلمة المرور؟",
+    "orLoginWith": "أو تسجيل الدخول باستخدام",
+    "loginWithFacebook": "تسجيل الدخول باستخدام الفيسبوك",
+    "loginWithGoogle": "تسجيل الدخول باستخدام جوجل",
+    "yourEmail": "بريدك الالكتروني",
+    "password": "كلمة المرور",
+    "errorMessage1": "البريد الإلكتروني الذي أدخلته غير متصل بأي حساب. اشترك الأن",  
+    "errorMessage2": "بريدك الإلكتروني او كلمة المرور ليست صحيحة",
+    "optionDescription": " ليس لديك حساب؟",
+    "signUp": "اشتراك",
+    "createAnAccount": "انشئ حساب",
+    "appDescription" :"اكتشف أفضل الأطعمة من أكثر من 1،000 \nمطعم مع توصيل سريع إلى عتبة داركم",
+    "signupdescription": "أضف التفاصيل الخاصة بك للتسجيل",
+    "name": "الاسم",
+    "mobileNo": "رقم الهاتف",
+    "address": "العنوان",
+    "confirmPassword":"تأكيد كلمة المرور",
+    "optionSignUpDesciption": "هل لديك حساب؟ "
+}

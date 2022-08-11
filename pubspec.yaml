@@ -29,22 +29,35 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: 
+    sdk: flutter    
+  intl: ^0.17.0     
+
+  
   google_fonts: ^3.0.1
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
- 
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   pinput: ^2.2.11
   shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
   animated_bottom_navigation_bar: ^1.0.1
   get_it: ^7.2.0
+  http: ^0.13.4  
+  flutter_screenutil: ^5.5.3+2
+  google_maps_flutter: ^2.1.10
+
+
+  
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.3
+ 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -62,10 +75,19 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/category/
+    - assets/images/bording/
+    - assets/images/beverages/
+    - assets/images/desserts/
+    - assets/images/icons/
+    - assets/images/restaurents/
+    - assets/images/food/
+    - assets/images/promotions/
     - assets/images/
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

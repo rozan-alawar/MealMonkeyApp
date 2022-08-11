@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:meal_monkey/constants/constants.dart';
-import 'package:meal_monkey/locator.dart';
-import 'package:meal_monkey/models/navigation_service.dart';
-import 'package:meal_monkey/models/router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'l10n/localization.dart';
+import 'component/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'locator.dart';
+import 'services/navigation_service.dart';
+import 'component/router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +21,21 @@ class DeliveryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: (settings) => Routerr.generateRoute(settings),
-      initialRoute: splashRoute,
-      navigatorKey: locator<NavigationService>().navigatorKey,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: Routerr.generateRoute,
+        initialRoute: splashRoute,
+        navigatorKey: locator<NavigationService>().navigatorKey,
+        supportedLocales: L10n.all,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+      ),
     );
   }
 }

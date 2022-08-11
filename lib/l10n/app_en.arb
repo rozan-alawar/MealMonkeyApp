@@ -1,0 +1,22 @@
+{
+    "appDescription": "Discover the best foods from over 1,000 \nrestaurants and fast delivery to your doorstep",
+    "createAnAccount": "Create an account",
+    "login": "Login",
+    "addYourDetailsToLogin": "Add  your details to login",
+    "forgetPassword": "Forget your password?",
+    "orLoginWith": "Or login with",
+    "loginWithFacebook": "Login with facebook",
+    "loginWithGoogle": "Login with Google",
+    "yourEmail": "Your Email",
+    "password": "Password",
+    "errorMessage1": "The email you entered isn’t connected to an account. sign up now",  
+    "errorMessage2": "your email or password is incorrect",
+    "optionDescription": "Don't have an Account? ",
+    "signUp": "Sign up",
+    "signupdescription": "Add your details to sign up",
+    "name": "Name",
+    "mobileNo": "Mobile No",
+    "address": "Address",
+    "confirmPassword":"Confirm Password",
+    "optionSignUpDesciption": "Already have an Account? "
+}
